@@ -1,10 +1,10 @@
 import os
-import zipfile as zip
+import shutil
 import json
-from datetime import datetime
 from bd_credentials import exec_select
 
 def export_dados(user):
+    os.system("cls")
     sql_tb_user = f"SELECT * FROM tb_user WHERE id_user = {user.id}"
     sql_tb_book = f"SELECT * FROM tb_book WHERE id_owner = {user.id}"
     sql_tb_loan = f"SELECT * FROM tb_loan WHERE id_user = {user.id}"
@@ -27,28 +27,40 @@ def export_dados(user):
     except:
         print("FALHA NO TRATAMENTO DOS DADOS.")
         return
+    
+    path_files = input("INFORME O LOCAL ONDE O ARQUIVO .ZIP SERÁ SALVO: ")
+    path_user = os.path.join(path_files, 'tb_user.json')
+    path_book = os.path.join(path_files, 'tb_book.json')
+    path_loan = os.path.join(path_files, 'tb_loan.json')
 
-    try:
-        path_files = input("INFORME O LOCAL ONDE O ARQUIVO .ZIP SERÁ SALVO: ")
-        path_user = os.path.join(path_files, 'tb_user.json')
-        path_book = os.path.join(path_files, 'tb_book.json')
-        path_loan = os.path.join(path_files, 'tb_loan.json')
-        
+    try:    
         cria_json(path_user, list_user)
         cria_json(path_book, list_book)
         cria_json(path_loan, list_loan)
-        print("ARQUIVOS JSON CRIADOS COM SUCESSO.")
+        print("ARQUIVOS .JSON CRIADOS COM SUCESSO.")
+    except FileNotFoundError:
+        print(f"CAMINHO INFORMADO: {path_files}, NÃO EXISTE. VERIFIQUE NOVAMENTE.")
+        input()
+        return
     except:
-        print("FALHA AO CRIAR OS ARQUIVOS JSON.")
+        print("FALHA AO CRIAR OS ARQUIVOS .JSON.")
+        input()
         return
 
+    try:
+        path_bakup = move_json(path_files)
+    except:
+        print("FALHA AO MOVER ARQUIVOS .JSON PARA DIRETORIO BACKUP")
+        input()
+        return
+    
     try:      
-        cria_zip(path_files, path_user)
-        cria_zip(path_files, path_book)
-        cria_zip(path_files, path_loan)
-        print("ARQUIVOS .ZIP CRIADO COM SUCESSO.")        
+        cria_zip(path_bakup, path_files)
+        input()
+        return        
     except:
         print("FALHA AO CRIAR OS ARQUIVOS ZIP.")
+        input()
         return
     
 
@@ -100,15 +112,19 @@ def loan_convert(tb_loan):
         list_loan.append(data.copy())
     return list_loan
 
-def cria_json(path_file, json_data):    
-    f = open(path_file, "w")
-    json.dump(json_data, f, sort_keys=True, indent=4)
-    f.close()
+def cria_json(path_file, json_data):
+    f = open(path_file, "w", encoding='utf-8')
+    json.dump(json_data, f, ensure_ascii=False, sort_keys=True, indent=4)
+    f.close()    
+    
+def move_json(path_files):    
+    path_bakup = os.path.join(path_files, "backup_sharring_books")
+    os.makedirs(path_bakup, exist_ok=True)
+    os.system(f"move {path_files}\\tb*.json {path_bakup}")
+    return path_bakup
 
-def cria_zip(path_files, path_file):
-    path_zip = os.path.join(path_files, "backup.zip")
-    zf = zip.ZipFile(path_zip, "a")
-    zf.write(path_file)
-    zf.close()
-    os.remove(path_file)
-
+def cria_zip(path_bakup, path_files):
+    path_zip = os.path.join(path_files, "backup_sharring_books")
+    shutil.make_archive(path_zip, 'zip', path_bakup)    
+    shutil.rmtree(path_bakup)
+    print(f"ARQUIVO CRIADO COM SUCESSO: {path_zip}.zip")
