@@ -1,0 +1,27 @@
+[
+   {
+      "book_name":"Instalações Elétricas",
+      "year":"1976",
+      "author":"Hélio Creder"
+   },
+   {
+      "book_name":"1984",
+      "year":"2009",
+      "author":"George Orwell"
+   },
+   {
+      "book_name":"O Homem Que Calculava",
+      "year":"1949",
+      "author":"Malba Tahan"
+   },
+   {
+      "book_name":"A Arte da Guerra",
+      "year":"2011",
+      "author":"Sun Tzu"
+   },
+   {
+      "book_name":"A Divina Comédia",
+      "year":"2008",
+      "author":"Dante Alighieri"
+   }
+]
