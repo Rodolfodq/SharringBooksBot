@@ -7,7 +7,8 @@ from lista_books import list_my_books, list_all_books, lista_book_disponível_us
 from emprestimo import disponibilizar_livro, pegar_novo_emprestimo, lista_livro_emprestimo
 from devolver import devolver_livro, lista_livros_devolucao
 from sobre import sobre_trabalho
-from import_json import json_import_livros
+from import_json import json_import_livros_arquivo, json_import_livros_url
+from exporta_dados import export_dados
 
 import sys
 sys.path.insert(0,'..\\')
@@ -34,12 +35,14 @@ def exibe_menu_principal(usuario):
     [06] DISPONIBILIZAR UM LIVRO
     [07] PEGAR LIVRO EMPRESTADO
     [08] DEVOLVER UM LIVRO
-    [09] IMPORTAR JSON DOS SEUS LIVROS
-    [10] SOBRE
+    [09] IMPORTAR ARQUIVO JSON DOS SEUS LIVROS
+    [10] IMPORTAR JSON A PARTIR DE UMA URL    
+    [11] SOBRE
+    [99] EXPORTAR SEUS DADOS EM JSON
     [00] Sair
     """)
 
-lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
+lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '99']
 exibe_menu_login()
 while(True):
     try:    
@@ -93,11 +96,17 @@ while(True):
                     os.system("cls")
                     exibe_menu_principal(usuario_logado)
             elif(opt == '09'):
-                json_import_livros(usuario_logado)
+                json_import_livros_arquivo(usuario_logado)
                 exibe_menu_principal(usuario_logado)
             elif(opt == '10'):
+                json_import_livros_url(usuario_logado)
+                exibe_menu_principal(usuario_logado)
+            elif(opt == '11'):
                 sobre_trabalho()
                 input()
+                exibe_menu_principal(usuario_logado)
+            elif(opt == '99'):
+                export_dados(usuario_logado)
                 exibe_menu_principal(usuario_logado)
             elif(opt == '00'):
                 os.system("cls")

@@ -26,8 +26,12 @@ def disponibilizar_livro(usuario):
     
     if(len(livro) > 0):
         novo_loan = Loan(0, usuario.id, livro[0][0], local, 'DISPONIVEL')
-        sql_loan = f"INSERT INTO tb_loan (id_user, id_book, begin_date, coletion_location, status) values('{usuario.id}', '{novo_loan.id_book}', '{novo_loan.begin_date}', '{novo_loan.collect_location}', '{novo_loan.status}')"
-        exec_command(sql_loan)
+        sql_loan = f"INSERT INTO tb_loan (id_user, id_book, begin_date, coletion_location, status) values('{usuario.id}', '{novo_loan.id_book}', null, '{novo_loan.collect_location}', '{novo_loan.status}')"
+        try:
+            exec_command(sql_loan)
+            print("LIVRO DISPONIBILIZADO COM SUCESSO!")
+        except:
+            print("FALHA AO DISPONIBILIZAR LIVRO.")
     else:
         print("ID ESCOLHIDO NÃO É VÁLIDO!")
 

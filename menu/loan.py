@@ -9,7 +9,7 @@ class Loan():
         self.id = id_loan
         self.id_user = id_user
         self.id_book = id_book
-        self.begin_date = ""
+        self.begin_date = ''
         #self.begin_time = now.strftime("%H:%M:%S")
         self.collect_location = collect_location
         self.end_date = ""

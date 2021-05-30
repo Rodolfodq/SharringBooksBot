@@ -47,6 +47,8 @@ sql_alter_loan_id_lender = """ALTER TABLE tb_loan ADD CONSTRAINT fk_tb_user_tb_l
                             FOREIGN KEY(id_lender) REFERENCES tb_user(id_user)
                             ;"""
 
+sql_alter_book_name = """ALTER TABLE tb_book ALTER COLUMN book_name TYPE varchar(150)"""
+
 #exec_command(sql_user)
 #exec_command(sql_book)
 #exec_command(sql_loan)
@@ -56,3 +58,4 @@ sql_alter_loan_id_lender = """ALTER TABLE tb_loan ADD CONSTRAINT fk_tb_user_tb_l
 #exec_command(sql_alter_book_owner)
 #exec_command(sql_alter_loan_lender)
 #exec_command(sql_alter_loan_id_lender)
+#exec_command(sql_alter_book_name)
