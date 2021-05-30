@@ -4,7 +4,7 @@ from bd_credentials import exec_select
 
 def list_my_books(user):
     os.system("cls")
-    sql = f"SELECT * FROM tb_book WHERE id_owner = {user.id}"
+    sql = f"SELECT * FROM tb_book WHERE id_owner = {user.id} ORDER BY id_book"
     livros = (exec_select(sql))
     for livro in livros:
         print(f"ID: {livro[0]}\nNome: {livro[1]}\nAno: {livro[2]}\nAutor: {livro[3]}\n")

@@ -1,8 +1,8 @@
 import os
 from user import User
 from login import user_login
-from cadastro import cadastro_usuario
-from cadastro_livro import novo_livro
+from cadastro import cadastro_usuario, update_usuario
+from cadastro_livro import novo_livro, update_book
 from lista_books import list_my_books, list_all_books, lista_book_disponível_user
 from emprestimo import disponibilizar_livro, pegar_novo_emprestimo, lista_livro_emprestimo
 from devolver import devolver_livro, lista_livros_devolucao
@@ -36,20 +36,23 @@ def exibe_menu_principal(usuario):
     [07] PEGAR LIVRO EMPRESTADO
     [08] DEVOLVER UM LIVRO
     [09] IMPORTAR ARQUIVO JSON DOS SEUS LIVROS
-    [10] IMPORTAR JSON A PARTIR DE UMA URL    
-    [11] SOBRE
+    [10] IMPORTAR JSON DOS SEUS LIVROS A PARTIR DE UMA URL 
+    [11] ATUALIZAR DADOS DO USUÁRIO
+    [12] ATUALIZAR DADOS DE UM LIVRO
+    [13] SOBRE
     [99] EXPORTAR SEUS DADOS EM JSON
     [00] Sair
     """)
 
-lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '99']
+lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13' '99']
 exibe_menu_login()
 while(True):
     try:    
         opt = input("OPCAO: ")
         if opt == '01':
-            usuario_logado = user_login()        
-            exibe_menu_principal(usuario_logado)
+            usuario_logado = user_login()
+            if(usuario_logado):
+                exibe_menu_principal(usuario_logado)
         elif opt == '02':
             cadastro_usuario()        
             usuario_logado = user_login() 
@@ -102,6 +105,12 @@ while(True):
                 json_import_livros_url(usuario_logado)
                 exibe_menu_principal(usuario_logado)
             elif(opt == '11'):
+                update_usuario(usuario_logado)
+                exibe_menu_principal(usuario_logado)
+            elif(opt == '12'):
+                update_book(usuario_logado)
+                exibe_menu_principal(usuario_logado)
+            elif(opt == '13'):
                 sobre_trabalho()
                 input()
                 exibe_menu_principal(usuario_logado)
@@ -118,7 +127,8 @@ while(True):
                 os.system("cls")
                 exibe_menu_principal(usuario_logado)      
         else:
-            usuario_logado = user_login()  
+            #usuario_logado = user_login()  
+            exibe_menu_login()
     except KeyboardInterrupt:
         print("\nSistema finalizado com sucesso.")
         exit()

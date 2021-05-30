@@ -16,6 +16,7 @@ def export_dados(user):
         print("DADOS COLETADOS COM SUCESSO.")    
     except:
         print("FALHA NA COLETA OS DADOS.")
+        input()
         return
 
     try:
@@ -26,6 +27,7 @@ def export_dados(user):
         print("DADOS CONVERTIDOS COM SUCESSO.")        
     except:
         print("FALHA NO TRATAMENTO DOS DADOS.")
+        input()
         return
     
     path_files = input("INFORME O LOCAL ONDE O ARQUIVO .ZIP SERÁ SALVO: ")

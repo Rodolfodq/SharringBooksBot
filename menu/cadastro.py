@@ -34,3 +34,37 @@ def cadastro_usuario_tela(nome, sobrenome, username, celular, password):
         return True
     except:
         return False
+
+
+def update_usuario(user):
+    os.system("cls")
+    print(f"ATUALIZAÇÃO DOS DADOS DO USUÁRIO: {user.username}\nTODOS OS CAMPOS SÃO OBRIGATÓRIOS.")
+    try:
+        nome = input("INFORME O PRIMEIRO NOME: ")
+        sobrenome = input("INFORME O SOBRENOME: ")
+        username = input("INFORME SEU USERNAME: ")
+        celular = input("INFORME O CELULAR: ")
+        password1 = getpass.getpass("INFORME A SENHA DE ACESSO: ")
+        password2 = getpass.getpass("CONFIRME A SENHA DE ACESSO: ")
+        while(password1 != password2):
+            print("AS SENHAS DEVEM SER AS MESMAS, TENTE NOVAMENTE!\n")
+            password1 = getpass.getpass("INFORME A SENHA DE ACESSO: ")
+            password2 = getpass.getpass("CONFIRME A SENHA DE ACESSO: ")
+        sql_update = f"""UPDATE tb_user
+                            SET 
+                            first_name = '{nome}',
+                            last_name = '{sobrenome}',
+                            celular = '{celular}',
+                            password = '{password1}',
+                            username = '{username}'
+                            WHERE id_user = {user.id};"""
+        exec_command(sql_update)
+        print("DADOS ATUALIZADOS COM SUCESSO.")
+    except:
+        print("FALHA NA ATUALIZAÇÃO DOS DADOS. TENTE NOVAMENTE")
+        input()
+        return
+
+
+
+

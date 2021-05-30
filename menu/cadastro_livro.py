@@ -2,6 +2,7 @@ from user import User
 from book import Book
 import os 
 from bd_credentials import exec_command
+from lista_books import list_my_books
 
 def novo_livro(user):
     os.system("cls")
@@ -33,3 +34,28 @@ def novos_livros_json(user, json_books):
     except:
         print("Falha na importação dos livros.")
         input()
+
+def update_book(user):
+    os.system("cls")
+    list_my_books(user)
+    book_id = input("INFORME O ID DO LIVRO QUE SERÁ ATUALIZADO: ")
+
+    try:
+        book_name = input("INFORME O NOME DO LIVRO: ")
+        year = int(input("INFORME O ANO DA EDIÇÃO: "))
+        author = input("INFORME O AUTOR: ")       
+
+        sql_book = f"""UPDATE tb_book
+                        SET 
+                        book_name = '{book_name}',
+                        year = '{year}',
+                        author = '{author}'
+                        WHERE id_book = '{book_id}'"""
+
+        exec_command(sql_book)
+        print("Livro atualizado com sucesso!")
+        input()
+    except:
+        print("Falha ao atualizar livro. Tente novamente")
+        input()
+
