@@ -50,7 +50,7 @@ def update_book(user):
                         book_name = '{book_name}',
                         year = '{year}',
                         author = '{author}'
-                        WHERE id_book = '{book_id}'"""
+                        WHERE id_book = '{book_id}' and id_owner = '{user.id}'"""
 
         exec_command(sql_book)
         print("Livro atualizado com sucesso!")
