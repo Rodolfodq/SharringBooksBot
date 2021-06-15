@@ -44,7 +44,7 @@ def exibe_menu_principal(usuario):
     [00] Sair
     """)
 
-lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13' '99']
+lista_menu = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '99']
 exibe_menu_login()
 while(True):
     try:    
@@ -83,10 +83,13 @@ while(True):
                 input()
                 exibe_menu_principal(usuario_logado)
             elif(opt == '07'):
-                result = lista_livro_emprestimo(usuario_logado)            
+                result, livros = lista_livro_emprestimo(usuario_logado)            
                 if result:
                     id_loan = input("Infome o ID do livro que você irá pegar emprestado: ")
-                    pegar_novo_emprestimo(usuario_logado, id_loan)                
+                    pegar_novo_emprestimo(usuario_logado, id_loan, livros)                                                          
+                else:
+                    print(f"{id_loan} não é um Id válido")
+                    input()                
                 exibe_menu_principal(usuario_logado)            
             elif(opt == '08'):
                 result = lista_livros_devolucao(usuario_logado)

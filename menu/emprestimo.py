@@ -6,18 +6,26 @@ from datetime import datetime
 from bd_credentials import exec_command, exec_select
 from lista_books import list_my_books, list_all_books, lista_book, lista_book_disponivel
 
-def pegar_novo_emprestimo(usuario, id_loan):
+def pegar_novo_emprestimo(usuario, id_loan, livros):
     now = datetime.now()
-    sql = f"""UPDATE tb_loan
-                SET id_lender = {usuario.id}, 
-                status = 'EMPRESTADO', 
-                begin_date = '{now.strftime("%d/%m/%Y")}'
-                WHERE id_loan = {id_loan}"""
-    result = exec_command(sql)
-    if result:
-        ("Livro pego emprestado com sucesso.")
-    else:
-        ("Falha ao pegar livro emprestado.")
+    for livro in livros:
+        if str(livro[3]) == id_loan:
+            sql = f"""UPDATE tb_loan
+                        SET id_lender = {usuario.id}, 
+                        status = 'EMPRESTADO', 
+                        begin_date = '{now.strftime("%d/%m/%Y")}'
+                        WHERE id_loan = {id_loan}"""
+            result = exec_command(sql)
+            if result:
+                ("Livro pego emprestado com sucesso.")
+                input()
+                return
+            else:
+                ("Falha ao pegar livro emprestado.")
+                input()
+                return
+    print(f"ID {id_loan} não é valido!")
+    input()
 
 def disponibilizar_livro(usuario):    
     id_livro = int(input("INFORME O ID DO LIVRO QUE SERÁ DISPONIBILIZADO: "))
@@ -47,7 +55,7 @@ def lista_livro_emprestimo(usuario):
         print("LIVROS DISPONÍVEIS PARA EMPRESTIMO: \n")
         for livro in livros:
             print(f"ID: {livro[3]}\nNome livro: {livro[0]}\nAutor: {livro[1]}\nAno de lançamento: {livro[2]}\nLocal para coleta: {livro[5]}\n\n")
-        return True
+        return True, livros
     else:
         print("Não há livros disponíveis para empréstimo.")
         input()

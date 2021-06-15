@@ -19,4 +19,3 @@ def sobre_trabalho():
         PROFESSOR:
             PROF. ME. FABRÍCIO GUSTAVO HENRIQUE
     """)
-    pass
